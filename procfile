@@ -1,1 +1,1 @@
-web: gunicorn hostel_management.wsgi:application
+web: gunicorn hostelmanagementsystem.wsgi:application
