@@ -1,0 +1,149 @@
+
+{% block content %}
+
+<style>
+    body {
+        background-color: #f4f6f9;
+    }
+
+    .holiday-container {
+        max-width: 700px;
+        margin: 50px auto;
+    }
+
+    .holiday-card {
+        border: none;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        background: #fff;
+    }
+
+    .holiday-header {
+        background: linear-gradient(135deg, #0d6efd, #0a58ca);
+        color: white;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .holiday-header h3 {
+        margin: 0;
+        font-weight: 600;
+    }
+
+    .holiday-body {
+        padding: 30px;
+    }
+
+    .holiday-body label {
+        font-weight: 600;
+        margin-bottom: 5px;
+        color: #333;
+    }
+
+    .holiday-body input,
+    .holiday-body select,
+    .holiday-body textarea {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #ced4da;
+        border-radius: 8px;
+        margin-bottom: 18px;
+        transition: 0.3s;
+    }
+
+    .holiday-body input:focus,
+    .holiday-body select:focus,
+    .holiday-body textarea:focus {
+        border-color: #0d6efd;
+        outline: none;
+        box-shadow: 0 0 8px rgba(13,110,253,0.2);
+    }
+
+    .btn-save {
+        background: #198754;
+        color: white;
+        border: none;
+        padding: 10px 25px;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: 0.3s;
+    }
+
+    .btn-save:hover {
+        background: #157347;
+        color: white;
+    }
+
+    .btn-cancel {
+        background: #6c757d;
+        color: white;
+        text-decoration: none;
+        padding: 10px 25px;
+        border-radius: 8px;
+        font-weight: 600;
+        margin-left: 10px;
+        transition: 0.3s;
+    }
+
+    .btn-cancel:hover {
+        background: #5c636a;
+        color: white;
+    }
+
+    .button-group {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    @media (max-width: 768px) {
+        .holiday-container {
+            margin: 20px;
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .btn-cancel {
+            margin-left: 0;
+        }
+    }
+</style>
+
+<div class="holiday-container">
+
+    <div class="holiday-card">
+
+        <div class="holiday-header">
+            <h3>📅 Declare Holiday</h3>
+        </div>
+
+        <div class="holiday-body">
+
+            <form method="POST">
+                {% csrf_token %}
+
+                {{ form.as_p }}
+
+                <div class="button-group">
+                    <button type="submit" class="btn-save">
+                        Save Holiday
+                    </button>
+
+                    <a href="{% url 'holiday_list' %}" class="btn-cancel">
+                        Cancel
+                    </a>
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

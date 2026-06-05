@@ -1,0 +1,111 @@
+{% extends 'templates/base.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-8">
+
+            <div class="card shadow">
+
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">Leave Request Form</h3>
+                </div>
+
+                <div class="card-body">
+
+                    <form method="POST">
+
+                        {% csrf_token %}
+
+                        {% if form.errors %}
+                            <div class="alert alert-danger">
+                                Please correct the errors below.
+                            </div>
+                        {% endif %}
+
+                        <!-- From Date -->
+                        <div class="mb-3">
+                            <label class="form-label">
+                                Leave From Date
+                            </label>
+
+                            {{ form.from_date }}
+                        </div>
+
+                        <!-- To Date -->
+                        <div class="mb-3">
+                            <label class="form-label">
+                                Leave To Date
+                            </label>
+
+                            {{ form.to_date }}
+                        </div>
+
+                        <!-- Reason -->
+                        <div class="mb-3">
+                            <label class="form-label">
+                                Reason for Leave
+                            </label>
+
+                            {{ form.reason }}
+                        </div>
+                        <!-- Parent Name -->
+<div class="mb-3">
+    <label class="form-label">
+        Parent Name
+    </label>
+
+    {{ form.parent_name }}
+</div>
+
+<!-- Parent Phone -->
+<div class="mb-3">
+    <label class="form-label">
+        Parent Phone Number
+    </label>
+
+    {{ form.parent_phone }}
+</div>
+
+<!-- Parent Email -->
+<div class="mb-3">
+    <label class="form-label">
+        Parent Email Address
+    </label>
+
+    {{ form.parent_email }}
+</div>
+                        
+
+                        <div class="text-center">
+
+                            <button
+                                type="submit"
+                                class="btn btn-success px-4">
+                                Submit Leave Request
+                            </button>
+
+                            <a href="{% url 'student_dashboard' %}"
+                               class="btn btn-secondary px-4">
+                               Cancel
+                            </a>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+

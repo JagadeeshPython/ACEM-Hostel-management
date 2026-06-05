@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hostel Leave Pass</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial, Helvetica, sans-serif;
+        }
+
+        body{
+            background:#f4f6f9;
+            padding:30px;
+        }
+
+        .leave-card{
+            max-width:950px;
+            margin:auto;
+            background:#fff;
+            border-radius:15px;
+            overflow:hidden;
+            box-shadow:0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        .header{
+            background:#0d6efd;
+            color:white;
+            text-align:center;
+            padding:25px;
+        }
+
+        .header h1{
+            margin-bottom:8px;
+            font-size:32px;
+        }
+
+        .header p{
+            font-size:14px;
+        }
+
+        .content{
+            padding:30px;
+        }
+
+        .student-section{
+            display:flex;
+            gap:30px;
+            align-items:center;
+            margin-bottom:30px;
+            border-bottom:2px solid #eee;
+            padding-bottom:25px;
+        }
+
+        .student-photo{
+            width:170px;
+            height:190px;
+            object-fit:cover;
+            border-radius:12px;
+            border:4px solid #0d6efd;
+        }
+
+        .student-details{
+            flex:1;
+        }
+
+        .detail-row{
+            margin-bottom:12px;
+            font-size:16px;
+        }
+
+        .label{
+            font-weight:bold;
+            color:#0d6efd;
+        }
+
+        .leave-info{
+            margin-top:20px;
+        }
+
+        .leave-info table{
+            width:100%;
+            border-collapse:collapse;
+        }
+
+        .leave-info th{
+            background:#0d6efd;
+            color:white;
+            padding:12px;
+            width:30%;
+            text-align:left;
+        }
+
+        .leave-info td{
+            padding:12px;
+            border:1px solid #ddd;
+        }
+
+        .approved-box{
+            margin-top:25px;
+            text-align:center;
+            background:#d1e7dd;
+            color:#146c43;
+            padding:15px;
+            border-radius:10px;
+            font-size:22px;
+            font-weight:bold;
+        }
+
+        .rejected-box{
+            margin-top:25px;
+            text-align:center;
+            background:#f8d7da;
+            color:#842029;
+            padding:15px;
+            border-radius:10px;
+            font-size:22px;
+            font-weight:bold;
+        }
+
+        .pending-box{
+            margin-top:25px;
+            text-align:center;
+            background:#fff3cd;
+            color:#856404;
+            padding:15px;
+            border-radius:10px;
+            font-size:22px;
+            font-weight:bold;
+        }
+
+        .footer{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            margin-top:40px;
+        }
+
+        .signature{
+            text-align:center;
+        }
+
+        .signature-line{
+            width:180px;
+            border-top:1px solid #000;
+            margin-top:40px;
+        }
+
+        .print-btn{
+            background:#198754;
+            color:white;
+            border:none;
+            padding:12px 25px;
+            border-radius:8px;
+            cursor:pointer;
+            font-size:16px;
+        }
+
+        .print-btn:hover{
+            background:#157347;
+        }
+
+        @media print{
+
+            body{
+                background:white;
+            }
+
+            .leave-card{
+                box-shadow:none;
+            }
+
+            .print-btn{
+                display:none;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="leave-card">
+
+    <div class="header">
+        <h1>ACEM HOSTEL LEAVE PASS</h1>
+        <p>Official Leave Approval Authorization</p>
+    </div>
+
+    <div class="content">
+
+        <div class="student-section">
+
+            {% if leave.student.photo %}
+                <img src="{{ leave.student.photo.url }}"
+                     class="student-photo"
+                     alt="Student Photo">
+            {% else %}
+                <img src="https://via.placeholder.com/170x190"
+                     class="student-photo"
+                     alt="No Photo">
+            {% endif %}
+
+            <div class="student-details">
+
+                <div class="detail-row">
+                    <span class="label">Student Name:</span>
+                    {{ leave.student.name }}
+                </div>
+
+                <div class="detail-row">
+                    <span class="label">Room Number:</span>
+                    {{ leave.student.room_no }}
+                </div>
+
+                <div class="detail-row">
+                    <span class="label">Mobile:</span>
+                    {{ leave.student.phone }}
+                </div>
+
+                <div class="detail-row">
+                    <span class="label">Email:</span>
+                    {{ leave.student.email }}
+                </div>
+
+              
+
+            </div>
+
+        </div>
+
+        <div class="leave-info">
+
+            <table>
+
+                <tr>
+                    <th>Leave From</th>
+                    <td>{{ leave.from_date }}</td>
+                </tr>
+
+                <tr>
+                    <th>Leave To</th>
+                    <td>{{ leave.to_date }}</td>
+                </tr>
+
+                <tr>
+                    <th>Reason</th>
+                    <td>{{ leave.reason }}</td>
+                </tr>
+
+                <tr>
+                    <th>Applied On</th>
+                    <td>{{ leave.applied_on }}</td>
+                </tr>
+
+                <tr>
+                    <th>Approved By</th>
+                    <td>{{ leave.approved_by }}</td>
+                </tr>
+
+                <tr>
+                    <th>Status</th>
+                    <td>{{ leave.status }}</td>
+                </tr>
+
+            </table>
+
+        </div>
+
+        {% if leave.status == 'Approved' %}
+            <div class="approved-box">
+                ✔ LEAVE APPROVED
+            </div>
+        {% elif leave.status == 'Rejected' %}
+            <div class="rejected-box">
+                ✖ LEAVE REJECTED
+            </div>
+        {% else %}
+            <div class="pending-box">
+                ⏳ LEAVE PENDING
+            </div>
+        {% endif %}
+
+        <div class="footer">
+
+            <div class="signature">
+
+                <div class="signature-line"></div>
+
+                Hostel Incharge Signature
+
+            </div>
+
+            <button onclick="window.print()"
+                    class="print-btn">
+                Print Leave Pass
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,373 @@
+{% extends 'templates/base.html' %}
+
+{% block content %}
+
+<style>
+html,body {
+    background-color: #f9f5f0;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+/* Carousel wrapper adjustment */
+.carousel-wrapper {
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Carousel wrapper adjustment */
+.carousel-wrapper {
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Image styling */
+#hostelCarousel {
+    max-width: 100%;
+    height: 600px;
+    overflow: hidden;
+    border-radius: 0;
+}
+
+#hostelCarousel .carousel-item img {
+    width: 100%;
+    height: 530px;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+
+.card-img-top {
+    border-radius: 10px;
+    height: 300px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+.card-img-top:hover {
+    transform: scale(1.05);
+}
+.feature-icon {
+    font-size: 2rem;
+    color: #0d6efd;
+    margin-bottom: 10px;
+}
+.management-card h6 {
+    color: #0d6efd !important; /* Blue */
+    font-weight: 600;
+}
+.holiday-card {
+    background: linear-gradient(135deg, #0d6efd, #0a58ca);
+    color: white;
+    border-radius: 15px;
+    padding: 40px;
+    text-align: center;
+    margin-top: 50px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
+
+.holiday-card h2 {
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.holiday-card p {
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.holiday-btn {
+    background: white;
+    color: #0d6efd;
+    font-weight: 600;
+    padding: 12px 30px;
+    border-radius: 30px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.holiday-btn:hover {
+    background: #f8f9fa;
+    color: #084298;
+    transform: translateY(-2px);
+}
+
+</style>
+<div class="bodycontent">
+<!-- Hero Section -->
+<div id="hostelCarousel" class="carousel slide shadow-sm rounded" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="/static/images/acem-mainblock.png" class="d-block w-100" alt="Wifi">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>ACEM</h5>
+        <p>Aditya College Of Engineering</p>
+      </div>
+    </div>
+    <div class="carousel-item ">
+      <img src="/static/images/hostel.webp" class="d-block w-100" alt="Room">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>Comfortable Rooms</h5>
+        <p>Peaceful and well-furnished rooms for students.</p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="/static/images/canteen.jpg" class="d-block w-100" alt="Canteen">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>Clean Dining Area</h5>
+        <p>Nutritious meals served in a hygienic environment.</p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="/static/images/freewifi.jpg" class="d-block w-100" alt="Wifi">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>Unlimited Wi-Fi</h5>
+        <p>High-speed internet for learning and entertainment.</p>
+      </div>
+    </div>
+     <div class="carousel-item">
+      <img src="/static/images/acem-girls-hostel.png" class="d-block w-100" alt="Wifi">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>Comfortable Rooms</h5>
+        <p> good hostel facility and hospitality with healthy and hygienic food</p>
+      </div>
+    </div>
+
+  </div>
+
+  <button class="carousel-control-prev" type="button" data-bs-target="#hostelCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#hostelCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </button>
+</div>
+
+
+<!-- <div class="bg-primary text-white text-center py-5 rounded shadow">
+    <h1 class="display-5 fw-bold">Welcome to HostelConnect</h1>
+    <p class="lead">Affordable & Comfortable Stay for Students</p>
+    <a href="{% url 'contact' %}" class="btn btn-light btn-lg mt-3">Contact Now</a>
+</div> -->
+
+<!-- Facilities Section -->
+<div class="mt-5">
+    <h2 class="text-center mb-4">Facilities We Provide</h2>
+    <div class="row text-center">
+    <div class="col-md-3 mb-4">
+        <div class="feature-icon"><i class="fas fa-wifi"></i></div>
+        <h6>High-Speed Wi-Fi</h6>
+        <p class="text-muted small">24/7 seamless connectivity to support online classes and entertainment.</p>
+    </div>
+    <div class="col-md-3 mb-4">
+        <div class="feature-icon"><i class="fas fa-bed"></i></div>
+        <h6>Comfortable Beds</h6>
+        <p class="text-muted small">Each room includes a single bed, mattress, and personal storage space.</p>
+    </div>
+    <div class="col-md-3 mb-4">
+        <div class="feature-icon"><i class="fas fa-utensils"></i></div>
+        <h6>Veg & Non-Veg Meals</h6>
+        <p class="text-muted small">Wholesome vegetarian meals daily with non-veg options twice a week.</p>
+    </div>
+    <div class="col-md-3 mb-4">
+        <div class="feature-icon"><i class="fas fa-bolt"></i></div>
+        <h6>Inverter Backup</h6>
+        <p class="text-muted small">Uninterrupted electricity backup to support your studies anytime.</p>
+    </div>
+    <!-- Add same descriptions for remaining features -->
+     </div>
+
+
+
+<!-- Facilities Section -->
+</div>
+<!-- Holiday Section -->
+<div class="holiday-card">
+    <h2>
+        <i class="fas fa-calendar-alt"></i>
+        Hostel Holiday Calendar
+    </h2>
+
+    <p>
+        Stay informed about upcoming hostel holidays, festival breaks,
+        national holidays, and special closure announcements.
+    </p>
+
+    <a href="{% url 'holiday_list' %}" class="holiday-btn">
+        View Upcoming Holidays
+    </a>
+</div>
+</div>
+
+<!-- Hostel Gallery -->
+<div class="mt-5">
+    <h2 class="text-center mb-4">Our Hostel in Pictures</h2>
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-sm">
+                <img src="/static/images/freewifi.jpg" class="card-img-top" alt="wifi">
+                <div class="card-body text-center">Fast Wi-Fi</div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-sm">
+                <img src="/static/images/canteen.jpg" class="card-img-top" alt="canteen">
+                <div class="card-body text-center">Clean Dining Area</div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-sm">
+                <img src="/static/images/boys-hostel1.webp" class="card-img-top" alt="room">
+                <div class="card-body text-center">Well-Maintained Rooms For Boys</div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-sm">
+                <img src="/static/images/girl-hostel1.webp" class="card-img-top" alt="room">
+                <div class="card-body text-center">Well-Maintained Rooms For Girls</div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-sm">
+                <img src="/static/images/acem-canteen.png" class="card-img-top" alt="room">
+                <div class="card-body text-center">ACEM Canteen</div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-sm">
+                <img src="/static/images/acem-cafeteria.png" class="card-img-top" alt="room">
+                <div class="card-body text-center">Cafeteria</div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Management Section -->
+<div class="management-section mt-5 shadow-sm">
+    <h2 class="text-center mb-5">Our Management</h2>
+
+    <div class="row">
+
+        <!-- Correspondent -->
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card management-card shadow h-100">
+                <img src="static/images/acem-management-1.png"
+                     class="card-img-top"
+                     alt="Correspondent">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Mr. R. Rama Mohan Reddy <br>B.Tech.,</h5>
+                    <h6 class="text-muted">Secretary and Correspondent</h6>
+                    <p class="card-text">
+                        Sri R. Rama Mohan Reddy, Secretary & Correspondent, Veda Educational Society is the Management Maestro who spring heads this splendid Institution.<br>
+                        It is my innate vision and futuristic mission to produce world class engineers for effective nation-building nurtured with humane qualities so that they go back to society as value-based professionals wanting to make a difference not only in their own lives but also in the lives of others.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- President -->
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card management-card shadow h-100">
+                <img src="static/images/ACEM-President.jpeg"
+                     class="card-img-top"
+                     alt="President">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Mr. M. Nagamalla Reddy <br>M.B.A.,</h5>
+                    <h6 class="text-muted">President</h6>
+                    <p class="card-text">
+                        Mr. M. Nagamalla Reddy, President, Veda Educational Society is modest in expression, meticulous in execution, full of lofty ideals and clear goals, dedicated to hard work and strong in determination.<br>
+                        He has a vision to educate, enlighten, ignite the latent thoughts of the students and propel them to explore new avenues. His commitment and vision for the institution by offering technical education in both conventional and hi-tech disciplines with state-of-the art facilities is sure to bring it to the threshold of success by providing responsible and competent citizens to the society.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Director -->
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card management-card shadow h-100">
+                <img src="static/images/ACEM-director.png"
+                     class="card-img-top"
+                     alt="Director">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Dr.S.Ramalinga Reddy <br>Ph.D., D.Sc., M.I.S.T.E., M.I.E.,</h5>
+                    <h6 class="text-muted">Director</h6>
+                    <p class="card-text">
+                        We are committed towards our students growth and excellent training in order to cater the growing demands of the industry.<br>Our Vision is to create entrepreneurs and corporate leaders.  We do not compromise on our quality of education. In this era of Start-Ups , we are working towards creating entrepreneurs by encouraging students to think big and to think out of the box.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Principal -->
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card management-card shadow h-100">
+                <img src="static/images/acem-principal.jpeg"
+                     class="card-img-top"
+                     alt="Principal">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Dr. Rayudu Peyyala,
+<br>M.Tech, Ph.D, MISTE, MIAENG, MTERA, MIAAC, MORCID,
+PG in Machine Learning (IISc, Bangalore)</h5>
+                    <h6 class="text-muted">Principal</h6>
+                    <p class="card-text">
+                        At Aditya College of Engineering, we are committed to integrating emerging technologies such as Artificial Intelligence (AI) into both the curriculum and the campus culture. Our faculty are actively adopting AI-powered tools in teaching-learning practices to make education more personalized, engaging, outcome-driven and emphasizing the project based learning. <br>Our goal is not only to produce academically strong engineers but also to nurture AI-empowered graduates who are capable of practicing their profession with innovation, ethical responsibility, and a forward-thinking mindset.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Student Testimonials -->
+<div class="bg-light p-5 mt-5 rounded shadow-sm">
+<h2 class="text-center text">What our students say about their hostel experience.</h2>
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <p>"ACEM Hostel helped me stay focused. Great food, friendly staff, and fast Wi-Fi!"</p>
+                    <h6 class="text-muted">– Rajesh</h6>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <p>"I feel at home here. Quiet rooms, great facilities, and a positive environment."</p>
+                    <h6 class="text-muted">– Raju M</h6>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <p>"The support and facilities here are top-notch. Highly recommended for students."</p>
+                    <h6 class="text-muted">– Afrin Sulthana</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Call to Action -->
+<div class="container-fluid bg-primary text-white py-5 mt-5 rounded shadow-sm">
+  <div class="row justify-content-center text-center">
+    <div class="col-lg-8 px-4">
+      <h2 class="fw-bold">Start Your Hostel Life with Us</h2>
+      <p class="lead mt-3">Safe, comfortable, and affordable accommodation for your academic journey.</p>
+      <p>Whether you’re joining college for the first time or shifting hostels — HostelConnect is ready to welcome you!</p>
+      <a href="{% url 'contact' %}" class="btn btn-light btn-lg mt-3 px-4">Contact Now</a>
+      <div class="mt-3">
+   
+</div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+{% endblock %}

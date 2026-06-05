@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Outpass History</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 30px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .table-container {
+            width: 90%;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background-color: #0d6efd;
+            color: white;
+        }
+
+        th {
+            padding: 15px;
+            text-align: center;
+        }
+
+        td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .approved {
+            color: green;
+            font-weight: bold;
+        }
+
+        .pending {
+            color: orange;
+            font-weight: bold;
+        }
+
+        .rejected {
+            color: red;
+            font-weight: bold;
+        }
+
+        .view-btn {
+            background-color: #198754;
+            color: white;
+            padding: 8px 14px;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: 0.3s;
+        }
+
+        .view-btn:hover {
+            background-color: #157347;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            background-color: #0d6efd;
+            color: white;
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+        }
+
+        .back-btn:hover {
+            background-color: #0b5ed7;
+        }
+
+        .no-record {
+            text-align: center;
+            color: #777;
+            padding: 20px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <h1>Outpass History</h1>
+
+    <div class="table-container">
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Outpass ID</th>
+                    <th>Status</th>
+                    <th>Applied On</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for pass in outpasses %}
+                <tr>
+
+                    <td>{{ pass.outpass_id }}</td>
+
+                    <td>
+                        {% if pass.status == 'Approved' %}
+                            <span class="approved">
+                                Approved
+                            </span>
+
+                        {% elif pass.status == 'Rejected' %}
+                            <span class="rejected">
+                                Rejected
+                            </span>
+
+                        {% else %}
+                            <span class="pending">
+                                Pending
+                            </span>
+                        {% endif %}
+                    </td>
+
+                    <td>
+                        {{ pass.applied_on }}
+                    </td>
+
+                    <td>
+                        {% if pass.status == 'Approved' %}
+                            <a href="{% url 'view_outpass' pass.id %}"
+                               class="view-btn">
+                                View Outpass
+                            </a>
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="no-record">
+                        No Outpass Requests Found
+                    </td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+        <center>
+            <a href="{% url 'student_dashboard' %}"
+               class="back-btn">
+                Back to Dashboard
+            </a>
+        </center>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,301 @@
+{% extends 'templates/base.html' %}
+
+{% block content %}
+
+<style>
+
+    body{
+        background:#f4f6f9;
+    }
+
+    .page-title{
+        text-align:center;
+        margin-bottom:25px;
+        color:#333;
+        font-weight:600;
+    }
+
+    .custom-card{
+        border:none;
+        border-radius:15px;
+        overflow:hidden;
+        box-shadow:0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .custom-header{
+        background:linear-gradient(135deg,#0d6efd,#0b5ed7);
+        color:white;
+        padding:15px;
+    }
+
+    .custom-header h4{
+        margin:0;
+        font-weight:600;
+    }
+
+    .form-label{
+        font-weight:600;
+        color:#444;
+    }
+
+    .form-control,
+    select,
+    textarea{
+        border-radius:10px;
+        padding:10px;
+    }
+
+    .submit-btn{
+        background:#198754;
+        border:none;
+        padding:10px 25px;
+        border-radius:8px;
+        font-weight:600;
+    }
+
+    .submit-btn:hover{
+        background:#157347;
+    }
+
+    .table-card{
+        margin-top:30px;
+    }
+
+    .table thead{
+        background:#212529;
+        color:white;
+    }
+
+    .table th{
+        text-align:center;
+        vertical-align:middle;
+    }
+
+    .table td{
+        text-align:center;
+        vertical-align:middle;
+    }
+
+    .badge{
+        font-size:14px;
+        padding:8px 12px;
+    }
+
+    .empty-box{
+        text-align:center;
+        padding:25px;
+        color:#666;
+        font-size:18px;
+    }
+
+</style>
+
+<div class="container mt-4">
+
+```
+<h2 class="page-title">
+    Leave Management
+</h2>
+
+<!-- Leave Form -->
+
+<div class="card custom-card">
+
+    <div class="custom-header">
+        <h4>Apply Leave</h4>
+    </div>
+
+    <div class="card-body">
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-success">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">
+                        Leave From Date
+                    </label>
+                    {{ form.from_date }}
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">
+                        Leave To Date
+                    </label>
+                    {{ form.to_date }}
+                </div>
+
+                <div class="col-md-12 mb-3">
+                    <label class="form-label">
+                        Reason
+                    </label>
+                    {{ form.reason }}
+                </div>
+
+                
+
+            </div>
+
+            <button type="submit"
+                    class="btn submit-btn">
+                Submit Leave Request
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<!-- Leave History -->
+
+<div class="card custom-card table-card">
+
+    <div class="custom-header">
+        <h4>Leave History</h4>
+    </div>
+
+    <div class="card-body">
+
+        {% if leaves %}
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered table-hover">
+
+                <thead>
+
+                    <tr>
+                           <th>S.No</th>
+                           <th>From Date</th>
+                           <th>To Date</th>
+                           <th>Reason</th>
+                           <th>Applied On</th>
+                           <th>Status</th>
+                           <th>Remarks</th>
+                           <th>Action</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                {% for leave in leaves %}
+
+                    <tr>
+
+                        <td>
+                            {{ forloop.counter }}
+                        </td>
+
+                        <td>
+                            {{ leave.from_date }}
+                        </td>
+
+                        <td>
+                            {{ leave.to_date }}
+                        </td>
+
+                        <td>
+                            {{ leave.reason }}
+                        </td>
+                        
+
+                        <td>
+                            {{ leave.applied_on|date:"d-m-Y H:i" }}
+                        </td>
+
+                        <td>
+
+                            {% if leave.status == 'Approved' %}
+
+                                <span class="badge bg-success">
+                                    Approved
+                                </span>
+
+                            {% elif leave.status == 'Rejected' %}
+
+                                <span class="badge bg-danger">
+                                    Rejected
+                                </span>
+
+                            {% else %}
+
+                                <span class="badge bg-warning text-dark">
+                                    Pending
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                        <td>
+
+                            {% if leave.remarks %}
+                                {{ leave.remarks }}
+                            {% else %}
+                                -
+                            {% endif %}
+
+                        </td>
+                        <td>
+                            {% if leave.status == 'Approved' %}
+
+                            <a href="{% url 'view_leave' leave.id %}"
+                                  class="btn btn-success btn-sm">
+                                   View Pass
+                               </a>
+
+                           {% elif leave.status == 'Rejected' %}
+
+                               <span class="text-danger">
+                                Not Available
+                               </span>
+
+                           {% else %}
+
+                             <span class="text-warning">
+                                Waiting Approval
+                             </span>
+
+                           {% endif %}
+
+                         </td>
+
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% else %}
+
+            <div class="empty-box">
+                No Leave Requests Found
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+```
+
+</div>
+
+{% endblock %}

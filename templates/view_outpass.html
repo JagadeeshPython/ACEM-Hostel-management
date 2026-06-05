@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hostel Outpass</title>
+
+    <style>
+
+        body{
+            font-family: Arial, sans-serif;
+            background:#f2f5f8;
+            padding:40px;
+        }
+
+        .outpass-card{
+            max-width:900px;
+            margin:auto;
+            background:white;
+            border-radius:15px;
+            box-shadow:0 5px 20px rgba(0,0,0,0.15);
+            overflow:hidden;
+        }
+
+        .header{
+            background:#0d6efd;
+            color:white;
+            text-align:center;
+            padding:20px;
+        }
+
+        .header h1{
+            margin:0;
+            font-size:32px;
+        }
+
+        .sub-title{
+            font-size:14px;
+            margin-top:5px;
+        }
+
+        .content{
+            padding:30px;
+        }
+
+        .student-section{
+            display:flex;
+            align-items:center;
+            gap:30px;
+            margin-bottom:30px;
+        }
+
+        .student-photo{
+
+            width:160px;
+            height:180px;
+
+            object-fit:cover;
+
+            border:4px solid #0d6efd;
+            border-radius:10px;
+        }
+
+        .details{
+            flex:1;
+        }
+
+        .detail-row{
+            margin-bottom:12px;
+            font-size:17px;
+        }
+
+        .label{
+            font-weight:bold;
+            color:#333;
+        }
+
+        .approved-box{
+
+            margin-top:30px;
+
+            text-align:center;
+
+            background:#d1e7dd;
+
+            border:2px solid #198754;
+
+            color:#198754;
+
+            padding:15px;
+
+            border-radius:10px;
+
+            font-size:24px;
+
+            font-weight:bold;
+        }
+
+        .footer{
+
+            margin-top:40px;
+
+            display:flex;
+
+            justify-content:space-between;
+
+            align-items:center;
+        }
+
+        .signature{
+
+            text-align:center;
+        }
+
+        .signature-line{
+
+            border-top:1px solid black;
+
+            width:180px;
+
+            margin-top:40px;
+        }
+
+        .print-btn{
+
+            background:#0d6efd;
+
+            color:white;
+
+            border:none;
+
+            padding:12px 25px;
+
+            border-radius:8px;
+
+            cursor:pointer;
+
+            font-size:16px;
+        }
+
+        .print-btn:hover{
+            background:#0b5ed7;
+        }
+
+        @media print{
+
+            .print-btn{
+                display:none;
+            }
+
+            body{
+                background:white;
+            }
+
+            .outpass-card{
+                box-shadow:none;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="outpass-card">
+
+    <div class="header">
+
+        <h1>ACEM HOSTEL OUTPASS</h1>
+
+        <div class="sub-title">
+            Official Student Movement Pass
+        </div>
+
+    </div>
+
+    <div class="content">
+
+        <div class="student-section">
+
+            {% if outpass.student.photo %}
+                <img src="{{ outpass.student.photo.url }}"
+                     class="student-photo">
+            {% endif %}
+
+            <div class="details">
+
+                <div class="detail-row">
+                    <span class="label">Outpass ID:</span>
+                    {{ outpass.outpass_id }}
+                </div>
+
+                <div class="detail-row">
+                    <span class="label">Student Name:</span>
+                    {{ outpass.student.name }}
+                </div>
+
+                <div class="detail-row">
+                    <span class="label">Room Number:</span>
+                    {{ outpass.student.room_no }}
+                </div>
+
+                <div class="detail-row">
+                    <span class="label">Destination:</span>
+                    {{ outpass.destination }}
+                </div>
+
+                <div class="detail-row">
+                    <span class="label">Reason:</span>
+                    {{ outpass.reason }}
+                </div>
+
+            </div>
+
+        </div>
+
+        <hr>
+
+        <div class="detail-row">
+            <span class="label">Out Time:</span>
+            {{ outpass.out_time }}
+        </div>
+
+        <div class="detail-row">
+            <span class="label">Return Time:</span>
+            {{ outpass.return_time }}
+        </div>
+
+        <div class="detail-row">
+            <span class="label">Emergency Contact:</span>
+            {{ outpass.emergency_contact }}
+        </div>
+
+        <div class="detail-row">
+            <span class="label">Approved By:</span>
+            {{ outpass.approved_by }}
+        </div>
+
+        <div class="detail-row">
+            <span class="label">Approved On:</span>
+            {{ outpass.approved_on }}
+        </div>
+
+        <div class="approved-box">
+            ✔ APPROVED
+        </div>
+
+        <div class="footer">
+
+            <div class="signature">
+
+                <div class="signature-line"></div>
+
+                Hostel Incharge Signature
+
+            </div>
+
+            <button onclick="window.print()"
+                    class="print-btn">
+
+                Print Outpass
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

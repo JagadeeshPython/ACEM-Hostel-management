@@ -1,0 +1,14 @@
+<h2>Outpass Verification</h2>
+
+<p>Name : {{ outpass.student.name }}</p>
+<p>Room : {{ outpass.student.room_no }}</p>
+
+{% if outpass.status == 'Approved' %}
+    <h2 style="color:green">
+        VALID OUTPASS
+    </h2>
+{% else %}
+    <h2 style="color:red">
+        INVALID OUTPASS
+    </h2>
+{% endif %}

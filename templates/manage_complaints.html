@@ -1,0 +1,79 @@
+{% extends 'templates/base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2>Manage Complaints</h2>
+
+    <table class="table table-bordered table-hover">
+
+    <thead class="table-dark">
+        <tr>
+            <th>Student</th>
+            <th>Subject</th>
+            <th>Complaint</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+    {% for complaint in complaints %}
+
+        <tr>
+
+            <td>{{ complaint.student.name }}</td>
+
+            <td>{{ complaint.subject }}</td>
+
+            <td>{{ complaint.msg }}</td>
+
+            <td>{{ complaint.date }}</td>
+
+            <td>
+
+                {% if complaint.status == "Pending" %}
+                    <span class="badge bg-warning">
+                        Pending
+                    </span>
+                {% else %}
+                    <span class="badge bg-success">
+                        Resolved
+                    </span>
+                {% endif %}
+
+            </td>
+
+            <td>
+
+                {% if complaint.status == "Pending" %}
+
+                    <a href="{% url 'resolve_complaint' complaint.id %}"
+                       class="btn btn-success btn-sm">
+                        Resolve
+                    </a>
+
+                {% else %}
+
+                    <button class="btn btn-secondary btn-sm" disabled>
+                        Resolved
+                    </button>
+
+                {% endif %}
+
+            </td>
+
+        </tr>
+
+    {% endfor %}
+
+    </tbody>
+
+</table>
+
+</div>
+
+{% endblock %}
