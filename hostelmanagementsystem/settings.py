@@ -54,10 +54,14 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'hostelmanagementsystem.urls'
 
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [r"C:/Users/STUDENT/Desktop/hostel management"],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -68,7 +72,6 @@ TEMPLATES = [
         },
     },
 ]
-
 WSGI_APPLICATION = 'hostelmanagementsystem.wsgi.application'
 
 
