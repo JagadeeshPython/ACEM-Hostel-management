@@ -31,7 +31,7 @@ def student_dashboard(request):
         logout(request)
         return redirect('login')
 
-    return render(request, 'templates/student_dashboard.html', {'student': student})
+    return render(request, 'student_dashboard.html', {'student': student})
 
 # Create your views here.
 
@@ -54,16 +54,16 @@ def export_stud_csv(request):
 
 
 def landing(request):
-    return render(request, "templates/landing_page.html")
+    return render(request, "landing_page.html")
 
 def home(request):
-    return render(request, "templates/index.html")
+    return render(request, "index.html")
 
 def rent(request):
-    return render(request, "templates/room&facilities.html")
+    return render(request, "room&facilities.html")
 
 def services(request):
-    return render(request, "templates/services.html")
+    return render(request, "services.html")
 
 def contact(request):
     if request.method == "POST":
@@ -80,7 +80,7 @@ def contact(request):
         )
         messages.success(request, "Thanks for Contacting us. We'll be in touch soon.")
         return redirect("contact")
-    return render(request, "templates/contact.html")
+    return render(request, "contact.html")
 
 def student_login(request):
     if request.user.is_authenticated:
@@ -99,7 +99,7 @@ def student_login(request):
         else:
             messages.error(request, "Invalid username or password")
 
-    return render(request, "templates/student_login.html")  # if request is GET it shows login form again.
+    return render(request, "student_login.html")  # if request is GET it shows login form again.
 
 def student_logout(request):
     logout(request)
@@ -113,13 +113,13 @@ def student_profile(request):
     # return render(request, "templates/student_profile.html", {'student': student})
     try:
         student = Student.objects.get(user=request.user)
-        return render(request, "templates/student_profile.html", {'student': student})
+        return render(request, "student_profile.html", {'student': student})
     except Student.DoesNotExist:
         messages.error(request, "Session expired or profile missing. Please login again.")
         logout(request)
         return redirect('student_login')
 
-    return render(request, 'templates/student_dashboard.html', {'student': student})
+    return render(request, 'student_dashboard.html', {'student': student})
 
 # def rent_history(request):
 #     student_rent = get_object_or_404(RentPaymentHistory, use=request.user)
@@ -138,7 +138,7 @@ def change_password(request):
     else:
         form = PasswordChangeForm(user=request.user)
 
-    return render(request, 'templates/change_password.html', {'form': form})
+    return render(request, 'change_password.html', {'form': form})
 
 @login_required(login_url='student_login')
 def rent_status(request):
@@ -160,7 +160,7 @@ def rent_status(request):
         return redirect('student_dashboard')
 
     rent_s = "Paid" if rent.rent_status else "Not paid"
-    return render(request, "templates/rent_status.html", {
+    return render(request, "rent_status.html", {
         'rent': rent,
         'rent_s': rent_s,
         'rent_history': rent_history,
@@ -170,7 +170,7 @@ def rent_status(request):
 
 @login_required(login_url='student_login')
 def room_info(request):
-    return render(request, "templates/room_info.html")
+    return render(request, "room_info.html")
 
 from django.contrib.auth.decorators import login_required
 
@@ -202,13 +202,13 @@ def complaint(request):
 
     return render(
         request,
-        "templates/complaint.html"
+        "complaint.html"
     )
 @login_required(login_url='student_login')
 def complaint_history(request):
     student = get_object_or_404(Student, user=request.user)
     complaints = Complaint.objects.filter(student=student).order_by('-date')
-    return render(request, 'templates/complaint_history.html', {'complaints': complaints})
+    return render(request, 'complaint_history.html', {'complaints': complaints})
 
 
 def mark_attendance(request):
@@ -313,7 +313,7 @@ def apply_leave(request):
 
     return render(
         request,
-        'templates/apply_leave.html',
+        'apply_leave.html',
         {'form': form}
     )
 
@@ -329,7 +329,7 @@ def leave_history(request):
 
     return render(
         request,
-        'templates/leave_history.html',
+        'leave_history.html',
         {'leaves': leaves}
     )
     
@@ -448,7 +448,7 @@ def hostel_dashboard(request):
 
     return render(
         request,
-        'templates/hostel_dashboard.html',
+        'hostel_dashboard.html',
         context
     )
     
@@ -486,7 +486,7 @@ def student_login(request):
 
     return render(
         request,
-        'templates/student_login.html'
+        'student_login.html'
     )
     
     from .models import HostelIncharge
@@ -523,7 +523,7 @@ def hostel_login(request):
 
     return render(
         request,
-        'templates/hostel_login.html'
+        'hostel_login.html'
     )
     
 
@@ -536,7 +536,7 @@ def manage_leaves(request):
 
     return render(
         request,
-        'templates/manage_leaves.html',
+        'manage_leaves.html',
         {'leaves': leaves}
     )
     
@@ -549,7 +549,7 @@ def manage_complaints(request):
 
     return render(
         request,
-        'templates/manage_complaints.html',
+        'manage_complaints.html',
         {
             'complaints': complaints
         }
@@ -562,7 +562,7 @@ def view_students(request):
 
     return render(
         request,
-        'templates/view_students.html',
+        'view_students.html',
         {'students': students}
     )
 @login_required(login_url='hostel_login')
@@ -574,7 +574,7 @@ def view_attendance(request):
 
     return render(
         request,
-        'templates/view_attendance.html',
+        'view_attendance.html',
         {
             'attendance_records': attendance_records
         }
@@ -672,7 +672,7 @@ def apply_outpass(request):
 
     return render(
         request,
-        'templates/apply_outpass.html'
+        'apply_outpass.html'
     )
     
 @login_required(login_url='hostel_login')
@@ -718,7 +718,7 @@ def outpass_history(request):
 
     return render(
         request,
-        'templates/outpass_history.html',
+        'outpass_history.html',
         {'outpasses': outpasses}
     )
     
@@ -736,7 +736,7 @@ def view_outpass(request, outpass_id):
 
     return render(
         request,
-        'templates/view_outpass.html',
+        'view_outpass.html',
         {'outpass': outpass}
     )
     
@@ -753,7 +753,7 @@ def manage_outpasses(request):
 
     return render(
         request,
-        'templates/manage_outpasses.html',
+        'manage_outpasses.html',
         {'outpasses': outpasses}
     )
 from django.contrib import messages
@@ -817,7 +817,7 @@ def verify_outpass(request, outpass_code):
 
     return render(
         request,
-        'templates/verify_outpass.html',
+        'verify_outpass.html',
         {'outpass': outpass}
     )
     
@@ -846,7 +846,7 @@ def apply_outpass(request):
 
     return render(
         request,
-        'templates/apply_outpass.html',
+        'apply_outpass.html',
         {'form': form}
     )
     
@@ -881,7 +881,7 @@ def leave_management(request):
 
     return render(
         request,
-        'templates/leave_management.html',
+        'leave_management.html',
         {
             'form': form,
             'leaves': leaves
@@ -898,7 +898,7 @@ def view_leave(request, leave_id):
 
     return render(
         request,
-        'templates/view_leave.html',
+        'view_leave.html',
         {'leave': leave}
     )
     
@@ -913,7 +913,7 @@ def holiday_list(request):
 
     return render(
         request,
-        'templates/holidays_list.html',
+        'holidays_list.html',
         {'holidays': holidays}
     )
     
@@ -931,7 +931,7 @@ def holiday_create(request):
     else:
         form = HolidayForm()
 
-    return render(request, 'templates/holiday_create.html', {
+    return render(request, 'holiday_create.html', {
         'form': form
     })
 
