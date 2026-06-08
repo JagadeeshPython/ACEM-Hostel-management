@@ -935,3 +935,25 @@ def holiday_create(request):
         'form': form
     })
 
+from django.shortcuts import get_object_or_404, redirect
+from .models import Leave
+
+def approve_leave(request, leave_id):
+    leave = get_object_or_404(Leave, id=leave_id)
+    leave.status = "Approved"
+    leave.save()
+    return redirect("manage_leaves")
+
+
+def reject_leave(request, leave_id):
+    leave = get_object_or_404(Leave, id=leave_id)
+    leave.status = "Rejected"
+    leave.save()
+    return redirect("manage_leaves")
+
+
+from django.contrib.auth.models import User
+from django.http import HttpResponse
+
+def user_count(request):
+    return HttpResponse(f"Users: {User.objects.count()}")

@@ -47,8 +47,8 @@ urlpatterns = [
     path('view-students/',views.view_students,name='view_students'),
     path('view-attendance/', views.view_attendance,name='view_attendance'),
     path('hostel-logout/',views.hostel_logout,name='hostel_logout'),
-    # path('approve-leave/<int:leave_id>/',views.approve_leave,name='approve_leave'),
-    # path('reject-leave/<int:leave_id>/',views.reject_leave,name='reject_leave'),
+    path('approve-leave/<int:leave_id>/',views.approve_leave,name='approve_leave'),
+    path('reject-leave/<int:leave_id>/',views.reject_leave,name='reject_leave'),
     path('resolve-complaint/<int:complaint_id>/',views.resolve_complaint,name='resolve_complaint'),
     path(
         'apply-outpass/',
@@ -106,6 +106,7 @@ urlpatterns = [
     path('holiday-list/',views.holiday_list, name='holiday_list'),
     path('incharge/holidays/', views.holiday_list, name='holiday_list'),
     path('incharge/holidays/add/', views.holiday_create, name='holiday_create'),
+    path('user-count/', views.user_count),
 
 ]
 
