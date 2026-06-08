@@ -107,6 +107,7 @@ urlpatterns = [
     path('incharge/holidays/', views.holiday_list, name='holiday_list'),
     path('incharge/holidays/add/', views.holiday_create, name='holiday_create'),
     path('user-count/', views.user_count),
+    path("create-admin/", views.create_admin),
 
 ]
 
