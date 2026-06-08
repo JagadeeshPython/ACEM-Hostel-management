@@ -2,6 +2,7 @@ asgiref==3.11.1
 blinker==1.9.0
 click==8.3.1
 colorama==0.4.6
+dj-database-url==3.1.2
 Django==6.0.4
 Flask==3.1.2
 Flask-JWT-Extended==4.7.1
@@ -12,10 +13,12 @@ joblib==1.5.3
 MarkupSafe==3.0.3
 mysqlclient==2.2.8
 nltk==3.9.3
+nump==5.5.5.5
 numpy==2.4.0
 packaging==26.2
 pandas==2.3.3
 pillow==12.1.1
+psycopg2-binary==2.9.12
 PyJWT==2.11.0
 PyMySQL==1.2.0
 python-dateutil==2.9.0.post0
