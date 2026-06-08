@@ -957,3 +957,17 @@ from django.http import HttpResponse
 
 def user_count(request):
     return HttpResponse(f"Users: {User.objects.count()}")
+
+from django.contrib.auth.models import User
+from django.http import HttpResponse
+
+def create_admin(request):
+    if not User.objects.filter(username="admin").exists():
+        User.objects.create_superuser(
+            username="admin",
+            email="admin@gmail.com",
+            password="Admin@123"
+        )
+        return HttpResponse("Superuser created")
+
+    return HttpResponse("Superuser already exists")
