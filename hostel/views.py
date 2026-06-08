@@ -633,73 +633,73 @@ def hostel_logout(request):
 
 #     return redirect('manage_leaves')
 
-@login_required
-def apply_outpass(request):
+# @login_required
+# def apply_outpass(request):
 
-    student = Student.objects.get(
-        user=request.user
-    )
+#     student = Student.objects.get(
+#         user=request.user
+#     )
 
-    if request.method == "POST":
+#     if request.method == "POST":
 
-        Outpass.objects.create(
-            student=student,
-            destination=request.POST.get(
-                "destination"
-            ),
-            reason=request.POST.get(
-                "reason"
-            ),
-            out_time=request.POST.get(
-                "out_time"
-            ),
-            return_time=request.POST.get(
-                "return_time"
-            ),
-            emergency_contact=request.POST.get(
-                "contact"
-            )
-        )
+#         Outpass.objects.create(
+#             student=student,
+#             destination=request.POST.get(
+#                 "destination"
+#             ),
+#             reason=request.POST.get(
+#                 "reason"
+#             ),
+#             out_time=request.POST.get(
+#                 "out_time"
+#             ),
+#             return_time=request.POST.get(
+#                 "return_time"
+#             ),
+#             emergency_contact=request.POST.get(
+#                 "contact"
+#             )
+#         )
 
-        messages.success(
-            request,
-            "Outpass request submitted."
-        )
+#         messages.success(
+#             request,
+#             "Outpass request submitted."
+#         )
 
-        return redirect(
-            'outpass_history'
-        )
+#         return redirect(
+#             'outpass_history'
+#         )
 
-    return render(
-        request,
-        'apply_outpass.html'
-    )
+#     return render(
+#         request,
+#         'apply_outpass.html'
+#     )
     
-@login_required(login_url='hostel_login')
-def approve_outpass(request, outpass_id):
+# @login_required(login_url='hostel_login')
+# def approve_outpass(request, outpass_id):
 
-    outpass = Outpass.objects.get(
-        id=outpass_id
-    )
+#     outpass = Outpass.objects.get(
+#         id=outpass_id
+#     )
 
-    outpass.status = "Approved"
+#     outpass.status = "Approved"
 
-    outpass.approved_by = (
-        request.user.username
-    )
+#     outpass.approved_by = (
+#         request.user.username
+#     )
 
-    outpass.approved_on = timezone.now()
+#     outpass.approved_on = timezone.now()
 
-    outpass.save()
+#     outpass.save()
 
-    messages.success(
-        request,
-        "Outpass Approved"
-    )
+#     messages.success(
+#         request,
+#         "Outpass Approved"
+#     )
 
-    return redirect(
-        'manage_outpasses'
-    )
+#     return redirect(
+#         'manage_outpasses'
+#     )
     
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
@@ -936,17 +936,17 @@ def holiday_create(request):
     })
 
 from django.shortcuts import get_object_or_404, redirect
-from .models import Leave
+from .models import LeaveRequest
 
 def approve_leave(request, leave_id):
-    leave = get_object_or_404(Leave, id=leave_id)
+    leave = get_object_or_404(LeaveRequest, id=leave_id)
     leave.status = "Approved"
     leave.save()
     return redirect("manage_leaves")
 
 
 def reject_leave(request, leave_id):
-    leave = get_object_or_404(Leave, id=leave_id)
+    leave = get_object_or_404(LeaveRequest, id=leave_id)
     leave.status = "Rejected"
     leave.save()
     return redirect("manage_leaves")
