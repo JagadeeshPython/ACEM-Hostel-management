@@ -154,3 +154,4 @@ EMAIL_USE_TLS = True
 
 EMAIL_HOST_USER = 'jagadeeshb0306@gmail.com'
 EMAIL_HOST_PASSWORD = 'yvsp ltdi yfhy scfr'
+
