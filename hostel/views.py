@@ -1013,37 +1013,17 @@ def absent_students(request):
         }
     )
 
-from datetime import date
-
-from django.contrib import messages
-from django.core.mail import send_mail
-from django.shortcuts import redirect
-
-from .models import (
-    Attendance,
-    Student,
-    AttendanceNotification
-)
-
-
-from datetime import date
-from django.contrib import messages
-from django.core.mail import send_mail
-from django.shortcuts import redirect
-
-from .models import Attendance, Student, AttendanceNotification
-
-
 def send_absent_notifications(request):
-
+    
     today = date.today()
 
-    # Students who marked attendance today
     present_users = Attendance.objects.filter(
         date=today
-    ).values_list('student_id', flat=True)
+    ).values_list(
+        'student_id',
+        flat=True
+    )
 
-    # Students who did not mark attendance
     absent_students = Student.objects.exclude(
         user_id__in=present_users
     )
@@ -1052,7 +1032,6 @@ def send_absent_notifications(request):
 
     for student in absent_students:
 
-        # Prevent duplicate emails
         already_sent = AttendanceNotification.objects.filter(
             student=student,
             date=today
@@ -1069,11 +1048,15 @@ def send_absent_notifications(request):
         if student.parent_email:
             recipients.append(student.parent_email)
 
-        if recipients:
+        if not recipients:
+            continue
 
-            room_no = student.room.room_number if student.room else "N/A"
+        room_no = (
+            student.room.room_number
+            if student.room else "N/A"
+        )
 
-            message = f"""
+        message = f"""
 Dear Parent/Student,
 
 This is to inform you that {student.name}
@@ -1090,27 +1073,41 @@ Aditya College Of Engineering,
 Madanapalli.
 """
 
-    send_mail(
-    subject="Attendance Alert",
-    message=message,
-    from_email="yourgmail@gmail.com",
-    recipient_list=recipients,
-    fail_silently=False,
-)
+        try:
+
+            send_mail(
+                subject="Attendance Alert",
+                message=message,
+                from_email="yourgmail@gmail.com",
+                recipient_list=recipients,
+                fail_silently=False,
+            )
+
+            AttendanceNotification.objects.create(
+                student=student,
+                date=today
+            )
+
+            emails_sent += 1
+
+        except Exception as e:
+            print("Email failed:", e)
 
     if emails_sent > 0:
+
         messages.success(
             request,
-            f"{emails_sent} new email notifications sent successfully."
+            f"{emails_sent} email notifications sent successfully."
         )
+
     else:
-        messages.info(
+
+        messages.warning(
             request,
-            "All absent students have already been notified today."
+            "No emails were sent. Check Render email settings and logs."
         )
 
     return redirect('absent_students')
-
 from django.shortcuts import render
 from .models import Room, Student
 
@@ -1133,3 +1130,19 @@ def room_occupancy_dashboard(request):
     return render(request, 'room_occupancy_dashboard.html', {
         'room_data': room_data
     })
+    
+    
+from django.http import HttpResponse
+from django.core.mail import send_mail
+
+def test_email(request):
+
+    send_mail(
+        "Test Mail",
+        "Email service working",
+        "jagadeeshb0306@gmail.com",
+        ["jagadeeshb0306@gmail.com"],
+        fail_silently=False
+    )
+
+    return HttpResponse("Mail Sent")

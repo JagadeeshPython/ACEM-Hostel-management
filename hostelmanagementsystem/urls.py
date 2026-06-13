@@ -122,6 +122,11 @@ urlpatterns = [
         views.room_occupancy_dashboard,
         name='room_occupancy_dashboard'
     ),
+    path(
+        'test-email/',
+        views.test_email,
+        name='test_email'
+    ),
 
 ]
 
