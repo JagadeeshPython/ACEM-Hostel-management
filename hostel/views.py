@@ -1090,24 +1090,13 @@ Aditya College Of Engineering,
 Madanapalli.
 """
 
-    try:
-        send_mail(
-            subject="Attendance Alert",
-            message=message,
-            from_email="yourgmail@gmail.com",
-            recipient_list=recipients,
-            fail_silently=False,
-        )
-
-        AttendanceNotification.objects.create(
-            student=student,
-            date=today
-        )
-
-        emails_sent += 1
-
-    except Exception as e:
-        print(f"Email failed for {student.name}: {e}")
+    send_mail(
+    subject="Attendance Alert",
+    message=message,
+    from_email="yourgmail@gmail.com",
+    recipient_list=recipients,
+    fail_silently=False,
+)
 
     if emails_sent > 0:
         messages.success(
