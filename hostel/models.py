@@ -3,7 +3,19 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from django.contrib.auth.models import User
 
+class Room(models.Model):
+    
+    room_number = models.CharField(
+        max_length=10,
+        unique=True
+    )
 
+    capacity = models.IntegerField(
+        default=4
+    )
+
+    def __str__(self):
+        return self.room_number
 
 class Student(models.Model):
     
@@ -33,7 +45,12 @@ class Student(models.Model):
 
     address = models.TextField()
 
-    room_no = models.CharField(max_length=10)
+    room = models.ForeignKey(
+    Room,
+    on_delete=models.SET_NULL,
+    null=True,
+    blank=True
+)
 
     rent_price = models.DecimalField(
         max_digits=8,
@@ -81,7 +98,7 @@ class Student(models.Model):
     )
 
     def __str__(self):
-        return f"{self.name} ({self.room_no})"
+        return f"{self.name} ({self.room.room_number if self.room else 'No Room'})"
 
 class Complaint(models.Model):
     
@@ -458,3 +475,4 @@ class AttendanceNotification(models.Model):
 
     def __str__(self):
         return f"{self.student.name} - {self.date}"
+
