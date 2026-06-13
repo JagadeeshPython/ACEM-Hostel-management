@@ -80,3 +80,12 @@ class HolidayAdmin(admin.ModelAdmin):
 from .models import AttendanceNotification
 
 admin.site.register(AttendanceNotification)
+
+
+from django.contrib import admin
+from .models import Room
+
+@admin.register(Room)
+class RoomAdmin(admin.ModelAdmin):
+    list_display = ('room_number', 'capacity')
+    search_fields = ('room_number',)

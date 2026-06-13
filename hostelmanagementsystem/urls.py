@@ -117,6 +117,11 @@ urlpatterns = [
         views.send_absent_notifications,
         name='send_absent_notifications'
     ),
+    path(
+        'room-occupancy/',
+        views.room_occupancy_dashboard,
+        name='room_occupancy_dashboard'
+    ),
 
 ]
 

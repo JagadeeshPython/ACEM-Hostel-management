@@ -1026,6 +1026,14 @@ from .models import (
 )
 
 
+from datetime import date
+from django.contrib import messages
+from django.core.mail import send_mail
+from django.shortcuts import redirect
+
+from .models import Attendance, Student, AttendanceNotification
+
+
 def send_absent_notifications(request):
 
     today = date.today()
@@ -1033,10 +1041,7 @@ def send_absent_notifications(request):
     # Students who marked attendance today
     present_users = Attendance.objects.filter(
         date=today
-    ).values_list(
-        'student_id',
-        flat=True
-    )
+    ).values_list('student_id', flat=True)
 
     # Students who did not mark attendance
     absent_students = Student.objects.exclude(
@@ -1047,7 +1052,7 @@ def send_absent_notifications(request):
 
     for student in absent_students:
 
-        # Check whether notification already sent today
+        # Prevent duplicate emails
         already_sent = AttendanceNotification.objects.filter(
             student=student,
             date=today
@@ -1066,11 +1071,13 @@ def send_absent_notifications(request):
 
         if recipients:
 
+            room_no = student.room.room_number if student.room else "N/A"
+
             message = f"""
 Dear Parent/Student,
 
 This is to inform you that {student.name}
-(Room No: {student.room_no})
+(Room No: {room_no})
 has not marked attendance today and is currently recorded as absent.
 
 Please contact the hostel administration if this is incorrect.
@@ -1091,7 +1098,6 @@ Madanapalli.
                 fail_silently=False,
             )
 
-            # Save notification record
             AttendanceNotification.objects.create(
                 student=student,
                 date=today
@@ -1111,3 +1117,26 @@ Madanapalli.
         )
 
     return redirect('absent_students')
+
+from django.shortcuts import render
+from .models import Room, Student
+
+def room_occupancy_dashboard(request):
+
+    rooms = Room.objects.all()
+
+    room_data = []
+
+    for room in rooms:
+        students = Student.objects.filter(room=room)
+
+        room_data.append({
+            'room': room,
+            'students': students,
+            'occupied': students.count(),
+            'available': room.capacity - students.count()
+        })
+
+    return render(request, 'room_occupancy_dashboard.html', {
+        'room_data': room_data
+    })
