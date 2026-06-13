@@ -82,24 +82,24 @@ def contact(request):
         return redirect("contact")
     return render(request, "contact.html")
 
-def student_login(request):
-    if request.user.is_authenticated:
-        return redirect('student_dashboard')
+# def student_login(request):
+#     if request.user.is_authenticated:
+#         return redirect('student_dashboard')
 
-    if request.method == "POST":
-        username = request.POST.get('username')
-        password = request.POST.get('password')
+#     if request.method == "POST":
+#         username = request.POST.get('username')
+#         password = request.POST.get('password')
 
-        user = authenticate(request, username=username, password=password)
+#         user = authenticate(request, username=username, password=password)
 
-        if user is not None:
-            login(request,user) # Logs the user in (creates session)
-            messages.success(request, "Login Successful!")
-            return redirect("student_dashboard")
-        else:
-            messages.error(request, "Invalid username or password")
+#         if user is not None:
+#             login(request,user) # Logs the user in (creates session)
+#             messages.success(request, "Login Successful!")
+#             return redirect("student_dashboard")
+#         else:
+#             messages.error(request, "Invalid username or password")
 
-    return render(request, "student_login.html")  # if request is GET it shows login form again.
+#     return render(request, "student_login.html")  # if request is GET it shows login form again.
 
 def student_logout(request):
     logout(request)
@@ -489,7 +489,7 @@ def student_login(request):
         'student_login.html'
     )
     
-    from .models import HostelIncharge
+from .models import HostelIncharge
 
 
 from django.contrib.auth import authenticate, login

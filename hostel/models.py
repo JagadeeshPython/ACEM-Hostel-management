@@ -6,33 +6,51 @@ from django.contrib.auth.models import User
 
 
 class Student(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    
+    GENDER_CHOICES = [
+        ('Male', 'Male'),
+        ('Female', 'Female'),
+        ('Other', 'Other'),
+    ]
+
+    user = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE
+    )
 
     name = models.CharField(max_length=100)
-    email = models.EmailField(unique=True)
+
+    email = models.EmailField(
+        unique=True
+    )
+
     phone = models.CharField(max_length=15)
 
-    gender = models.CharField(max_length=10)
+    gender = models.CharField(
+        max_length=10,
+        choices=GENDER_CHOICES
+    )
+
     address = models.TextField()
 
     room_no = models.CharField(max_length=10)
 
-    rent_price = models.CharField(
-        max_length=10,
-        default="3000"
+    rent_price = models.DecimalField(
+        max_digits=8,
+        decimal_places=2,
+        default=3000.00
     )
 
     rent_status = models.BooleanField(
         default=False
     )
+
     photo = models.ImageField(
         upload_to='student_photos/',
         blank=True,
         null=True
     )
 
-
-    # Parent Details
     parent_name = models.CharField(
         max_length=100,
         blank=True,
@@ -54,9 +72,16 @@ class Student(models.Model):
         auto_now_add=True
     )
 
-    def __str__(self):
-        return f"{self.name} |-| {self.room_no}"
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
 
+    updated_at = models.DateTimeField(
+        auto_now=True
+    )
+
+    def __str__(self):
+        return f"{self.name} ({self.room_no})"
 
 class Complaint(models.Model):
     

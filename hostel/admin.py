@@ -11,7 +11,7 @@ from .models import HostelIncharge
 # admin.site.register(Student)
 @admin.register(Student)
 class StudentAdmin(admin.ModelAdmin):
-    list_display = ('name', 'room_no', 'phone', 'email', 'join_date')
+    list_display = ('user','name', 'room_no', 'phone', 'email', 'join_date')
     actions = ['export_as_csv']
 
     def export_as_csv(self, request, queryset):
