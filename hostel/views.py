@@ -118,7 +118,6 @@ def student_profile(request):
         messages.error(request, "Session expired or profile missing. Please login again.")
         logout(request)
         return redirect('student_login')
-
     return render(request, 'student_dashboard.html', {'student': student})
 
 # def rent_history(request):
@@ -971,3 +970,144 @@ def create_admin(request):
         return HttpResponse("Superuser created")
 
     return HttpResponse("Superuser already exists")
+
+
+
+from datetime import date
+from django.shortcuts import render
+
+from .models import (
+    Attendance,
+    Student,
+    AttendanceNotification
+)
+
+def absent_students(request):
+
+    today = date.today()
+
+    present_users = Attendance.objects.filter(
+        date=today
+    ).values_list(
+        'student_id',
+        flat=True
+    )
+
+    absentees = Student.objects.exclude(
+        user_id__in=present_users
+    )
+
+    # Check notification status
+    for student in absentees:
+
+        student.email_sent = AttendanceNotification.objects.filter(
+            student=student,
+            date=today
+        ).exists()
+
+    return render(
+        request,
+        'absent_students.html',
+        {
+            'absentees': absentees
+        }
+    )
+
+from datetime import date
+
+from django.contrib import messages
+from django.core.mail import send_mail
+from django.shortcuts import redirect
+
+from .models import (
+    Attendance,
+    Student,
+    AttendanceNotification
+)
+
+
+def send_absent_notifications(request):
+
+    today = date.today()
+
+    # Students who marked attendance today
+    present_users = Attendance.objects.filter(
+        date=today
+    ).values_list(
+        'student_id',
+        flat=True
+    )
+
+    # Students who did not mark attendance
+    absent_students = Student.objects.exclude(
+        user_id__in=present_users
+    )
+
+    emails_sent = 0
+
+    for student in absent_students:
+
+        # Check whether notification already sent today
+        already_sent = AttendanceNotification.objects.filter(
+            student=student,
+            date=today
+        ).exists()
+
+        if already_sent:
+            continue
+
+        recipients = []
+
+        if student.email:
+            recipients.append(student.email)
+
+        if student.parent_email:
+            recipients.append(student.parent_email)
+
+        if recipients:
+
+            message = f"""
+Dear Parent/Student,
+
+This is to inform you that {student.name}
+(Room No: {student.room_no})
+has not marked attendance today and is currently recorded as absent.
+
+Please contact the hostel administration if this is incorrect.
+
+Hostel Incharge Contact Number: 6305134256
+
+Regards,
+Hostel Incharge,
+Aditya College Of Engineering,
+Madanapalli.
+"""
+
+            send_mail(
+                subject="Attendance Alert",
+                message=message,
+                from_email=None,
+                recipient_list=recipients,
+                fail_silently=False,
+            )
+
+            # Save notification record
+            AttendanceNotification.objects.create(
+                student=student,
+                date=today
+            )
+
+            emails_sent += 1
+
+    if emails_sent > 0:
+        messages.success(
+            request,
+            f"{emails_sent} new email notifications sent successfully."
+        )
+    else:
+        messages.info(
+            request,
+            "All absent students have already been notified today."
+        )
+
+    return redirect('absent_students')

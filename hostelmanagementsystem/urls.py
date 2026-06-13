@@ -108,6 +108,15 @@ urlpatterns = [
     path('incharge/holidays/add/', views.holiday_create, name='holiday_create'),
     path('user-count/', views.user_count),
     path("create-admin/", views.create_admin),
+    path(
+    'absent-students/',
+    views.absent_students,
+    name='absent_students'),
+    path(
+        'send-absent-notifications/',
+        views.send_absent_notifications,
+        name='send_absent_notifications'
+    ),
 
 ]
 

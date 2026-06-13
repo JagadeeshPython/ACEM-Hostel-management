@@ -55,3 +55,8 @@ class HolidayAdmin(admin.ModelAdmin):
     )
     list_filter = ('holiday_type',)
     search_fields = ('title',)
+    
+    
+from .models import AttendanceNotification
+
+admin.site.register(AttendanceNotification)

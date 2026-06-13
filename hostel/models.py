@@ -441,4 +441,20 @@ class Holiday(models.Model):
     description = models.TextField(blank=True)
 
 
+class AttendanceNotification(models.Model):
+    student = models.ForeignKey(
+        Student,
+        on_delete=models.CASCADE
+    )
 
+    date = models.DateField()
+
+    sent_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    class Meta:
+        unique_together = ('student', 'date')
+
+    def __str__(self):
+        return f"{self.student.name} - {self.date}"
